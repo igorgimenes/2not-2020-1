@@ -21,6 +21,19 @@
          
       */
 
+      let n
+
+      do {
+         n = parseInt(prompt('Informe um número inteiro maior que 1:'))
+      } while(isNaN(n) || n <= 1)
+
+      let fatorial = 1
+
+      for(let i = n; i >= 1; i--) {
+         fatorial *= i // equivale a: fatorial = fatorial * i
+      }
+
+      alert(n + '! é igual a ' + fatorial + '.')
 
    </script>
 </head>
