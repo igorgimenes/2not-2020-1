@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Documento Modelo</title>
+</head>
+<body>
+   <h1>Título do documento</h1>
+   <p>Agora eu sou o primeiro</p>
+   <p id="p1">Parágrafo de texto</p>
+   <div>
+      <hr>
+      <p id="p2" style="background: yellow">Outro parágrafo</p>
+      <p>Parágrafo anônimo</p>
+   </div>
+   
+   <script>
+      // Liga o modo "chato" do JS
+      // Não deixa usar variáveis sem let ou var
+      'use strict'
+
+      // Carregando outro documento na mesma janela
+      //window.location.href = 'https://fatecfranca.edu.br'
+
+      // Traz todos os elementos de uma determinada tag
+      let vetParags = document.getElementsByTagName('p')
+      console.log(vetParags);
+
+      // Capturando o primeiro parágrafo
+      let primeiroP = vetParags[0];
+
+      // Trocando o texto, forma 1: innerText (considera tags como texto)
+      primeiroP.innerText = 'Sou o primeiro parágrafo' 
+      //vetParags[0].innerText = 'Sou o <strong>primeiro</strong> parágrafo' 
+
+      // Trocando o texto, forma 2: innerHTML (considera tags como código-fonte)
+      primeiroP.innerHTML = 'Sou o <strong>primeiro</strong> <em>parágrafo</em>' 
+
+      /**********************************************/
+
+      let primeiro = document.getElementById('p1')
+      let segundo = document.getElementById('p2')
+
+      primeiro.innerText = 'Mudei novamente o conteúdo do primeiro parágrafo'
+      segundo.innerText = 'Olá, sou o segundo parágrafo!'
+
+      /*********************************************/
+      /*
+         jQuery(): introduziu novas formas de encontrar elementos no documento.
+         Com a versão ES5 do JS, a linguagem incorporou essas formas mais fáceis
+      */
+
+      /*
+         querySelector('tag'): traz o PRIMEIRO elemento encontrado daquela
+         tag
+      */
+      let novoPrimeiro = document.querySelector('p')
+      novoPrimeiro.innerHTML = 'Olá, sou <b>primeirão</b> agora!'
+
+      /*
+         querySelector('#id'): captura o elemento pelo id
+      */
+      let p1 = document.querySelector('#p1')
+
+      p1.innerText = 'Mudou de novo!'
+      p1.style.backgroundColor = 'limegreen'
+
+
+   </script>
+
+</body>
+</html>
