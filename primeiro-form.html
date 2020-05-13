@@ -41,6 +41,7 @@
          <option>(Selecione)</option>
          <option>Sua Majestade</option>
          <option>Excelentíssimo/a</option>
+         <option>Ilustríssimo/a</option>
          <option>Vossa Senhoria</option>
          <option>Senhor/a</option>
       </select>
@@ -114,6 +115,8 @@
       
          let valido = true
 
+         let valHoraDia = parseInt(horaDia.value)
+
          // trim(): corta espaços em branco sobrando do início
          // e do final de uma string
          if(primeiroNome.value.trim() == '') {
@@ -122,34 +125,100 @@
             valido = false
          }
          
-         if(sobrenome.value.trim() == '') {
+         else if(sobrenome.value.trim() == '') {
             alert('O sobrenome deve ser preenchido.')
             sobrenome.focus() // Coloca o cursor no elemento especificado
             valido = false
          }
 
-         if(formaTratamento.selectedIndex <= 0) {
+         else if(formaTratamento.selectedIndex <= 0) {
             alert('Selecione uma forma de tratamento válida.')
             formaTratamento.focus()
             valido = false
          }
 
-         if(!(masculino.checked || feminino.checked)) {
+         else if(!(masculino.checked || feminino.checked)) {
             alert('Selecione um sexo.')
             masculino.focus()
             valido = false
          }
 
-         let valHoraDia = parseInt(horaDia.value)
-         if(isNaN(valHoraDia) || valHoraDia < 0 || valHoraDia > 23) {
+         
+         else if(isNaN(valHoraDia) || valHoraDia < 0 || valHoraDia > 23) {
             alert('A hora do dia deve estar entre 0 e 23.')
+            valHoraDia.focus()
             valido = false
+         }
+
+         // Uma das opções de exibição da mensagem deve estar selecionada,
+         // pelo menos
+         else if(!(exibirAlert.checked || exibirDoc.checked)) {
+            alert('Selecione pelo menos uma opção de saída para a mensagem.')
+            exibirAlert.focus()
+            valido = false
+         }
+
+         // Os dados do formulário são válidos, vamos montar e exibir a mensagem
+         // de saudação
+         if(valido) {
+            let mensagem
+            
+            if(valHoraDia >= 0 && valHoraDia <= 11) {
+               mensagem = 'Bom dia, '
+            }
+            else if(valHoraDia >= 12 && valHoraDia <= 18) {
+               mensagem = 'Boa tarde, '
+            }
+            else {
+               mensagem = 'Boa noite, '
+            }
+
+            switch(formaTratamento.selectedIndex) {
+               case 1: // Sua Majestade
+                  mensagem += 'Sua Majestade ' // mensagem = mensagem + 'Sua ...'
+                  break;
+               
+               case 2: // Excelentíssimo/a
+                  if(masculino.checked) mensagem += 'Excelentíssimo '
+                  else mensagem += 'Excelentíssima '
+                  break;
+
+               case 3: // Ilustríssimo/a
+                  // Usando if curto
+                  mensagem += feminino.checked ? 'Ilustríssima ' : 'Ilustríssimo '
+                  break;
+
+               case 4: // Vossa Senhoria
+                  mensagem += 'Vossa Senhoria '
+                  break
+               
+               case 5: // Senhor/a
+                  //if(masculino.checked) mensagem += 'Senhor '
+                  //else mensagem += 'Senhora '
+                  
+                  // Usando o operador ternário ("if curto")
+                  mensagem += masculino.checked ? 'Senhor ' : 'Senhora '
+                  break;
+            }
+
+            mensagem += primeiroNome.value + ' ' + sobrenome.value
+            mensagem += '! Como posso ser útil?'
+
+            if(exibirAlert.checked) {
+               alert(mensagem)
+            }
+            if(exibirDoc.checked) {
+               // Exibe na div #saudacao
+               saudacao.innerText = mensagem
+            }
+
          }
 
       }
 
       // Forma RECOMENDADA de associar uma função a um evento de elemento
       saudar.addEventListener('click', botaoClique)
+      // saudar.addEventListener('mouseover', botaoClique)
 
    </script>   
 </body>
